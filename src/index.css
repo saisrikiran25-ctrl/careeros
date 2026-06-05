@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ─── */
+:root {
+  --bg-base:        #0A0C10;
+  --bg-surface:     #111318;
+  --bg-elevated:    #1A1D24;
+  --bg-subtle:      #1F2330;
+  --border:         #2A2F3D;
+  --border-active:  #3D4558;
+
+  --accent:         #4EFFC5;
+  --accent-dim:     #1A4D3E;
+  --accent-glow:    rgba(78,255,197,0.15);
+
+  --signal-blue:    #4E9FFF;
+  --signal-amber:   #FFB84E;
+  --signal-red:     #FF6B6B;
+  --signal-green:   #4EFFC5;
+
+  --text-primary:   #F0F2F7;
+  --text-secondary: #8892A4;
+  --text-muted:     #505668;
+  --text-inverse:   #0A0C10;
+}
+
+/* ─── Global Resets ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'IBM Plex Mono', monospace;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Syne', sans-serif;
+  margin: 0;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-active);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ─── Selection ─── */
+::selection {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+/* ─── Custom Utilities ─── */
+@layer utilities {
+  .glow-accent {
+    box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(78,255,197,0.08);
+  }
+
+  .glow-accent-sm {
+    box-shadow: 0 0 10px var(--accent-glow);
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, var(--accent), var(--signal-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .shimmer-bg {
+    background: linear-gradient(
+      90deg,
+      var(--bg-surface) 25%,
+      var(--bg-elevated) 50%,
+      var(--bg-surface) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  .card-base {
+    @apply rounded-xl border bg-[--bg-surface] p-6;
+    border-color: var(--border);
+  }
+
+  .input-base {
+    @apply rounded-lg px-4 py-3 text-sm outline-none transition-colors w-full;
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .input-base::placeholder {
+    color: var(--text-muted);
+  }
+
+  .input-base:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+  }
+
+  .btn-accent {
+    @apply rounded-lg px-6 py-3 font-semibold transition-all duration-150 cursor-pointer;
+    background-color: var(--accent);
+    color: var(--text-inverse);
+    font-family: 'Syne', sans-serif;
+    border: none;
+  }
+
+  .btn-accent:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .btn-accent:active {
+    transform: scale(0.99);
+  }
+
+  .btn-ghost {
+    @apply rounded-lg px-6 py-3 font-semibold transition-all duration-150 cursor-pointer;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    font-family: 'Syne', sans-serif;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    transform: scale(1.02);
+  }
+}
+
+/* ─── Animations ─── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes progressPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.cursor-blink::after {
+  content: '|';
+  color: var(--accent);
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+/* ─── Diff View Styles ─── */
+.diff-original {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--signal-red);
+  text-decoration-thickness: 1px;
+}
+
+.diff-improved-key {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+/* ─── Prose / Content ─── */
+.prose-mono p, .prose-mono li {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
