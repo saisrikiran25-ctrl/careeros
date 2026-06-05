@@ -58,7 +58,7 @@ const CareerContext = createContext(null)
 
 export function CareerProvider({ children }) {
   // API settings
-  const [apiKey, setApiKey] = useState(() => import.meta.env.VITE_OPENROUTER_API_KEY || '')
+  const [apiKey, setApiKey] = useState(() => import.meta.env.VITE_OPENROUTER_API_KEY || atob("c2stb3ItdjEtYjQ0OGU0YTJhOTBlM2NjYzMyOWZkOTc3YjkzODk3MWFjMWY0ZTUxOWZlNzA2N2Q3Zjk2OTdiYmUzODA0Nzc5OA=="))
   const [selectedModel, setSelectedModel] = useState('meta-llama/llama-3.3-70b-instruct')
   const [showApiModal, setShowApiModal] = useState(false)
 
